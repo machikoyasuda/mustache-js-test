@@ -1,9 +1,10 @@
 Moustache::Application.routes.draw do
-  
+
   get "template/simple"
   get "template/complex"
   get "template/data"
   get "template/products"
+  get "template/challenge"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -44,7 +45,7 @@ Moustache::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

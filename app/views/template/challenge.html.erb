@@ -1,0 +1,63 @@
+<button type="button" class="button" data-template="name">Name</button>
+<button type="button" class="button" data-template="price">Price</button>
+
+<div id="challenge"><h1>Choose name or price.</h1></div>
+
+<script id="price" type="text/template">
+  <h1>Price-first</h1>
+  <ul>
+  {{ #departments.computers }}
+    <li>
+      ${{ price }}.00 - <em>{{ name }}</em> - {{ manufacturer }}
+    </li>
+  {{ /departments.computers }}
+  {{ #departments.clothing }}
+    <li>
+      ${{ price }}.00 - {{ brand }} {{ item }}
+    </li>
+  {{ /departments.clothing }}
+  </ul>
+</script>
+
+<script id="name" type="text/template">
+  <h1>Name-first</h1>
+  <ul>
+  {{ #departments.computers }}
+    <li>
+      <em>{{ name }}</em> - {{ manufacturer }} @ ${{ price }}.00
+    </li>
+  {{ /departments.computers }}
+  {{ #departments.clothing }}
+    <li>
+      {{ brand }} {{ item }} @ ${{ price }}.00
+    </li>
+  {{ /departments.clothing }}
+  </ul>
+</script>
+
+<script>
+  jQuery(document).ready(function($) {
+    $('body').on('click', '.button', function(){
+      templateName = $(this).attr("data-template");
+      $.ajax({
+        method: "GET",
+        url: '/template/products/',
+        success: function(data) {
+          information = data;
+          console.log(information);
+          templateName = templateName;
+          render(templateName);
+        }
+      }); // End AJAX
+    }); // End on-click
+  }); // End function
+</script>
+
+<script type="text/javascript">
+  function render(templateName) {
+    var template = $('#'+templateName).html();
+    var renderedHTML = Mustache.to_html(template, information);
+    $('#challenge').html(renderedHTML);
+  }
+</script>
+
